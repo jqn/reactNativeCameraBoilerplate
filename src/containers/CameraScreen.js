@@ -2,20 +2,60 @@
 import React, {Component} from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 
+import Toast from 'react-native-tiny-toast';
+import {RNCamera} from 'react-native-camera';
+
 import Camera from '../components/Camera/Camera';
 import CameraControls from '../components/Camera/CameraControls';
 import CameraSettings from '../components/Camera/CameraSettings';
-
 import ViewFinder from '../components/Camera/ViewFinder';
 
 export default class CameraScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      flashMode: RNCamera.Constants.FlashMode.off,
+      flashIcon: 'flash-off',
+      zoom: 0,
+      zoomValue: '1x',
+    };
     StatusBar.setHidden(true);
   }
 
+  _toggleFlash = () => {
+    console.log('toggle');
+    let newFlashMode;
+    let icon;
+    const {auto, on, off} = RNCamera.Constants.FlashMode;
+    switch (this.state.flashMode) {
+      case on:
+        newFlashMode = off;
+        icon = 'flash-off';
+        break;
+      case auto:
+        newFlashMode = on;
+        icon = 'flash';
+        break;
+      case off:
+        newFlashMode = auto;
+        icon = 'flash-auto';
+        break;
+    }
+    this.setState({
+      flashMode: newFlashMode,
+      flashIcon: icon,
+    });
+  };
+
+  _toggleZoom = () => {
+    this.setState({
+      zoom: this.state.zoom === 0 ? 0.002 : 0,
+      zoomValue: this.state.zoomValue === '2x' ? '1x' : '2x',
+    });
+  };
+
   _takePicture = async () => {
+    Toast.showLoading('Capturing');
     if (this.camera) {
       const options = {
         quality: 0.8,
@@ -25,23 +65,31 @@ export default class CameraScreen extends Component {
       const data = await this.camera.takePictureAsync(options);
       console.log('data', data);
     }
+    Toast.hide();
   };
 
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <CameraSettings onClosePress={() => {}} toggleFlash={() => {}} />
+        <CameraSettings
+          onClosePress={() => {}}
+          toggleFlash={() => this._toggleFlash()}
+          flashIcon={this.state.flashIcon}
+        />
         <ViewFinder>
           <Camera
             cameraRef={(ref) => {
               this.camera = ref;
             }}
+            flashMode={this.state.flashMode}
+            zoom={this.state.zoom}
           />
         </ViewFinder>
         <CameraControls
           onCapturePress={() => this._takePicture()}
-          toggleZoom={() => {}}
+          toggleZoom={() => this._toggleZoom()}
           onCountPress={() => {}}
+          zoomValue={this.state.zoomValue}
         />
       </SafeAreaView>
     );

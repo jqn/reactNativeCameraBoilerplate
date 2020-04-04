@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import useDeviceOrientation from '../../hooks/useDeviceOrientation';
 
-const CameraControls = ({onClosePress, toggleFlash}) => {
+const CameraControls = ({onClosePress, toggleFlash, flashIcon}) => {
   const deviceOrientation = useDeviceOrientation();
   return (
     <View
@@ -24,7 +24,7 @@ const CameraControls = ({onClosePress, toggleFlash}) => {
         }>
         <TouchableOpacity onPress={toggleFlash} style={styles.button}>
           <MaterialCommunityIcons
-            name="flash"
+            name={flashIcon}
             backgroundColor="#FFF"
             color="#FFF"
             size={35}
@@ -87,11 +87,13 @@ const styles = StyleSheet.create({
 CameraControls.defaultProps = {
   onClosePress: () => {},
   toggleFlash: () => {},
+  flashIcon: 'flash-off',
 };
 
 CameraControls.propTypes = {
   onClosePress: PropTypes.func,
   toggleFlash: PropTypes.func,
+  flashIcon: PropTypes.string,
 };
 
 export default CameraControls;

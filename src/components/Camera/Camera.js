@@ -1,7 +1,9 @@
 // src/component/Camera/Camera.js
 import React from 'react';
 import {StyleSheet} from 'react-native';
+
 import {RNCamera} from 'react-native-camera';
+
 import PropTypes from 'prop-types';
 import NotAuthView from './NotAuthView';
 import PendingAuthView from './PendingAuthView';
@@ -32,7 +34,7 @@ Camera.defaultProps = {
   children: null,
   cameraRef: () => null,
   whiteBalanceMode: RNCamera.Constants.WhiteBalance.auto,
-  flashMode: RNCamera.Constants.FlashMode.auto,
+  flashMode: RNCamera.Constants.FlashMode.off,
   zoom: 0,
 };
 
