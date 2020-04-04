@@ -1,6 +1,0 @@
-module Pods_ReactNativeCameraBoilerPlate_ReactNativeCameraBoilerPlateTests {
-  umbrella header "Pods-ReactNativeCameraBoilerPlate-ReactNativeCameraBoilerPlateTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
