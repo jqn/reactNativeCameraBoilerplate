@@ -7,7 +7,13 @@ import PropTypes from 'prop-types';
 
 import useDeviceOrientation from '../../hooks/useDeviceOrientation';
 
-const CameraControls = ({onCapturePress, toggleZoom, count, zoomValue}) => {
+const CameraControls = ({
+  onCapturePress,
+  toggleZoom,
+  onCountPress,
+  count,
+  zoomValue,
+}) => {
   const deviceOrientation = useDeviceOrientation();
   return (
     <View
@@ -37,7 +43,7 @@ const CameraControls = ({onCapturePress, toggleZoom, count, zoomValue}) => {
           />
         </TouchableOpacity>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.counter}>
+          <TouchableOpacity onPress={onCountPress} style={styles.counter}>
             <Text style={styles.counterText}>{count}</Text>
           </TouchableOpacity>
         </View>
@@ -123,11 +129,17 @@ const styles = StyleSheet.create({
 CameraControls.defaultProps = {
   count: 0,
   zoomValue: '1x',
+  onCapturePress: () => {},
+  toggleZoom: () => {},
+  onCountPress: () => {},
 };
 
 CameraControls.propTypes = {
   count: PropTypes.number,
   zoomValue: PropTypes.string,
+  onCapturePress: PropTypes.func,
+  toggleZoom: PropTypes.func,
+  onCountPress: PropTypes.func,
 };
 
 export default CameraControls;

@@ -30,7 +30,7 @@ export default class CameraScreen extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <CameraSettings />
+        <CameraSettings onClosePress={() => {}} toggleFlash={() => {}} />
         <ViewFinder>
           <Camera
             cameraRef={(ref) => {
@@ -38,7 +38,11 @@ export default class CameraScreen extends Component {
             }}
           />
         </ViewFinder>
-        <CameraControls onCapturePress={() => this._takePicture()} />
+        <CameraControls
+          onCapturePress={() => this._takePicture()}
+          toggleZoom={() => {}}
+          onCountPress={() => {}}
+        />
       </SafeAreaView>
     );
   }

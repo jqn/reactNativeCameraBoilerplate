@@ -1,13 +1,13 @@
 // src/components/Camera/CameraControls.js
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
 
 import useDeviceOrientation from '../../hooks/useDeviceOrientation';
 
-const CameraControls = ({onCapturePress, toggleZoom, count, zoomValue}) => {
+const CameraControls = ({onClosePress, toggleFlash}) => {
   const deviceOrientation = useDeviceOrientation();
   return (
     <View
@@ -22,9 +22,7 @@ const CameraControls = ({onCapturePress, toggleZoom, count, zoomValue}) => {
             ? styles.rowContainer
             : styles.columnContainer
         }>
-        <TouchableOpacity
-          // onPress={onClosePress}
-          style={styles.button}>
+        <TouchableOpacity onPress={toggleFlash} style={styles.button}>
           <MaterialCommunityIcons
             name="flash"
             backgroundColor="#FFF"
@@ -33,9 +31,7 @@ const CameraControls = ({onCapturePress, toggleZoom, count, zoomValue}) => {
             style={styles.icon}
           />
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={onClosePress}
-          style={styles.button}>
+        <TouchableOpacity onPress={onClosePress} style={styles.button}>
           <MaterialCommunityIcons
             name="close"
             backgroundColor="#FFF"
@@ -89,13 +85,13 @@ const styles = StyleSheet.create({
 });
 
 CameraControls.defaultProps = {
-  count: 0,
-  zoomValue: '1x',
+  onClosePress: () => {},
+  toggleFlash: () => {},
 };
 
 CameraControls.propTypes = {
-  count: PropTypes.number,
-  zoomValue: PropTypes.string,
+  onClosePress: PropTypes.func,
+  toggleFlash: PropTypes.func,
 };
 
 export default CameraControls;
