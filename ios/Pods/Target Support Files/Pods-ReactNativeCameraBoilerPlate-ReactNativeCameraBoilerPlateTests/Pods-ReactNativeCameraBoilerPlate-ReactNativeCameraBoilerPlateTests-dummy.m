@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_ReactNativeCameraBoilerPlate_ReactNativeCameraBoilerPlateTests : NSObject
+@end
+@implementation PodsDummy_Pods_ReactNativeCameraBoilerPlate_ReactNativeCameraBoilerPlateTests
+@end
