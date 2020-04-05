@@ -4,11 +4,13 @@ import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 
 import Toast from 'react-native-tiny-toast';
 import {RNCamera} from 'react-native-camera';
+import Upload from 'react-native-background-upload';
 
 import Camera from '../components/Camera/Camera';
 import CameraControls from '../components/Camera/CameraControls';
 import CameraSettings from '../components/Camera/CameraSettings';
 import ViewFinder from '../components/Camera/ViewFinder';
+import ImagePreview from '../components/Camera/Preview';
 
 export default class CameraScreen extends Component {
   constructor(props) {
@@ -18,6 +20,9 @@ export default class CameraScreen extends Component {
       flashIcon: 'flash-off',
       zoom: 0,
       zoomValue: '1x',
+      showPreview: false,
+      imagePath: '',
+      uploads: [],
     };
     StatusBar.setHidden(true);
   }
@@ -64,6 +69,7 @@ export default class CameraScreen extends Component {
       };
       const data = await this.camera.takePictureAsync(options);
       console.log('data', data);
+      this.setState({imagePath: data.uri, showPreview: true});
     }
     Toast.hide();
   };
@@ -90,6 +96,11 @@ export default class CameraScreen extends Component {
           toggleZoom={() => this._toggleZoom()}
           onCountPress={() => {}}
           zoomValue={this.state.zoomValue}
+        />
+        <ImagePreview
+          visible={this.state.showPreview}
+          source={{uri: this.state.imagePath}}
+          close={() => this.setState({showPreview: false})}
         />
       </SafeAreaView>
     );
